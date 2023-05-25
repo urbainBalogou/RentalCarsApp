@@ -1,0 +1,54 @@
+
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>liste des voitures</title>
+    <style>
+    body{
+    background: #ff4584 linear-gradient(225deg,#e91e63,#03a9f4);
+
+    z-index:1;
+    }
+    div.car{
+    display:flex;
+    justify-direction:column;
+    justify-content:center;
+    align-items: top;
+    padding:50px;
+
+     }
+    .nom{
+    text-transform:uppercase;
+    position:absolute;
+    margin-top:20px;
+    padding-bottom:25px;
+    color:blue;
+
+    }
+
+
+
+</style>
+</head>
+<body>
+<h1><span style="font-family:Sans-serif;font-size:50px;border-bottom:dashed"><a href="{%url 'main' %}" style="text-decoration:none;"><em>LES VOITURES</em></a></span></h1>
+{% if user.is_authenticated %}
+<span style="color:blue;font-weight:90px;">{{ user.username }}</span>
+<a href="{% url 'logout' %}" style="text-decoration:none">Déconnexion</a>
+{%else%}
+<a href="{% url 'login' %}">Connexion</a>
+<a href="{% url 'signup' %}">S'inscrire</a>
+{% endif %}
+        {% for car in cars%}
+    <div class="car">
+        <h2 class="nom">{{car.marque}}</h2>
+        {% if car.img_vehicule %}
+            <a href="{{car.get_absolute_url}}"><img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}" style="max-width:550px;"></a>
+        {%else%}
+            <a href="{{car.get_absolute_url}}">plus de détails</a>
+        {%endif%}
+
+    </div>
+        {%endfor%}
+</body>
+</html>

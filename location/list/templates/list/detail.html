@@ -1,0 +1,48 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Les voitures</title>
+    <style>
+        body{
+         background: #ff4584 linear-gradient(225deg,#e91e63,#03a9f4);
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ car.model }}</h1>
+
+    <p style="color:white;"><strong>Prix journalier: {{ car.prix_location }} F</strong></p>
+    {%if car.img_vehicule%}
+        <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}" style="max-width:250px;">
+    {%endif%}
+    <p style="font-weight:bold;color:white;">Type de carburant: {{ car.type_carburant}}</p>
+    {%if car.disponibilite%}
+    <p style="font-weight:bold;color:green">disponible</p>
+    {%else%}
+    <p style="font-weight:bold;color:red">non disponible</p>
+    {%endif%}
+
+    {% if user.is_authenticated %}
+    <form method="GET">
+        {% csrf_token %}
+        <label for="commentaire">commentaire</label>
+        <textarea id="commentaire" name="commentaire"></textarea>
+        <input type="submit">
+    </form>
+    <h1><span style="text-decoration:underline">Commencer par faire une reservation</span></h1>
+    <form method="POST">
+         {% csrf_token %}
+    <label for="date-deb"><span style="color:green;">Date de début</span></label>
+    <input type="date" id="date-deb" name="date_deb" required>
+        <label for="date-fin"><span style="color:green;">Date fin</span></label>
+    <input type="date" id="date-fin" name="date_fin" required>
+    <input type="submit" value="Reserver">
+    </form>
+    {%endif%}
+
+
+
+
+
+</body>
+</html>
