@@ -1,12 +1,16 @@
-{% load static %}
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Page d'accueil</title>
-    <link rel="stylesheet" href="{% static 'main/style.css' %}">
-</head>
-<body>
-<h1>AGENCE DE LOCATION DE VOITURE</h1>
-<p><a href="{%url 'index' %}">Visiter les voitures</a></p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+ {% block content %}
+<main>
+        <section class="hero">
+            <div class="hero-text">
+                <h2>VENTE ET LOCATION DE VEHICULE – PRESTATON DE SERVICES</h2>
+                <p>Découvrez notre flotte de véhicules disponibles pour tous vos besoins de transport.</p>
+                <a href="{% url 'index' %}" class="cta-button">Visiter les voitures</a>
+            </div>
+        </section>
+    </main>
+    {% endblock %}
+
+
+

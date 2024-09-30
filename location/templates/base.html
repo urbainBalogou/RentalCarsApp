@@ -1,0 +1,52 @@
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Agence de Location</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+   <header>
+    <div class="header-content">
+        <h1><a href="{% url 'main' %}"><img src="{% static 'main/images/img.png' %}" alt="Logo de l'agence"></a></h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'nos_Services' %}">Nos Services</a></li>
+                <li><a href="{% url 'index' %}">Nos Véhicules</a></li>
+                <li><a href="#">Contrats</a></li>
+                <li><a href="tel:+22890122357">WhatsApp</a></li>
+                <li><a href="mailto:elonovacar@gmail.com">Email</a></li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="auth-links">
+                        {% if user.is_authenticated %}
+                            <span>{{ user.username }}</span>
+                            <a href="{% url 'logout' %}">Déconnexion</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Connexion</a>
+                            <a href="{% url 'signup' %}">S'inscrire</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    {% block content %}
+
+    {% endblock %}
+   <footer>
+        <p>&copy; 2024 ELONOVACAR - Tous droits réservés</p>
+        <p>Contact Développeur: +22870436043</p>
+        <a href="#"><p>Portfolio du Développeur:</p></a>
+       <p>Quartier Attiégou, non loin de l’EPP Attiégou</p>
+       <p>Tél : (+228) 99 83 45 48 / 90 12 23 57</p>
+       <p>NIF : 1001876719</p>
+
+    </footer>
+
+</body>
+</html>

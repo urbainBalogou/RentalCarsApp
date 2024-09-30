@@ -1,54 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
 
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>liste des voitures</title>
-    <style>
-    body{
-    background: #ff4584 linear-gradient(225deg,#e91e63,#03a9f4);
+<title>Liste des voitures</title>
 
-    z-index:1;
-    }
-    div.car{
-    display:flex;
-    justify-direction:column;
-    justify-content:center;
-    align-items: top;
-    padding:50px;
+{% block content %}
+<link rel="stylesheet" href="{% static 'list/style.css' %}">
 
-     }
-    .nom{
-    text-transform:uppercase;
-    position:absolute;
-    margin-top:20px;
-    padding-bottom:25px;
-    color:blue;
-
-    }
+<!-- Auth Links -->
 
 
+<!-- Section de recherche -->
+<div class="search-bar">
+    <input type="text" id="search-input" placeholder="Rechercher par nom, marque ou prix...">
+</div>
 
-</style>
-</head>
-<body>
-<h1><span style="font-family:Sans-serif;font-size:50px;border-bottom:dashed"><a href="{%url 'main' %}" style="text-decoration:none;"><em>LES VOITURES</em></a></span></h1>
-{% if user.is_authenticated %}
-<span style="color:blue;font-weight:90px;">{{ user.username }}</span>
-<a href="{% url 'logout' %}" style="text-decoration:none">Déconnexion</a>
-{%else%}
-<a href="{% url 'login' %}">Connexion</a>
-<a href="{% url 'signup' %}">S'inscrire</a>
-{% endif %}
-        {% for car in cars%}
+<!-- Liste des voitures -->
+<div id="car-list">
+    {% for car in cars %}
     <div class="car">
-        <h2 class="nom">{{car.marque}}</h2>
+        <h2 class="nom">{{ car.marque }}</h2>
+        <p class="prix">{{ car.prix_location }} F CFA</p>
         {% if car.img_vehicule %}
-            <a href="{{car.get_absolute_url}}"><img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}" style="max-width:550px;"></a>
-        {%else%}
-            <a href="{{car.get_absolute_url}}">plus de détails</a>
-        {%endif%}
-
+            <a href="{{ car.get_absolute_url }}">
+                <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">
+            </a>
+        {% else %}
+            <a href="{{ car.get_absolute_url }}">plus de détails</a>
+        {% endif %}
     </div>
-        {%endfor%}
-</body>
-</html>
+    {% endfor %}
+</div>
+
+<script>
+    // Fonction pour filtrer les voitures
+    document.getElementById('search-input').addEventListener('keyup', function() {
+        let input = document.getElementById('search-input').value.toLowerCase();
+        let cars = document.querySelectorAll('.car');
+
+        cars.forEach(function(car) {
+            let carName = car.querySelector('.nom').innerText.toLowerCase();
+            let carPrice = car.querySelector('.prix').innerText.toLowerCase();
+
+            // Vérifie si le texte de recherche correspond à la marque ou au prix
+            if (carName.includes(input) || carPrice.includes(input)) {
+                car.style.display = ""; // Affiche la voiture
+            } else {
+                car.style.display = "none"; // Cache la voiture
+            }
+        });
+    });
+</script>
+
+{% endblock %}

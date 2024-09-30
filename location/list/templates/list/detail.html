@@ -1,48 +1,144 @@
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Les voitures</title>
-    <style>
-        body{
-         background: #ff4584 linear-gradient(225deg,#e91e63,#03a9f4);
-        }
-    </style>
-</head>
-<body>
-    <h1>{{ car.model }}</h1>
+{% extends 'base.html' %}
 
-    <p style="color:white;"><strong>Prix journalier: {{ car.prix_location }} F</strong></p>
-    {%if car.img_vehicule%}
-        <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}" style="max-width:250px;">
-    {%endif%}
-    <p style="font-weight:bold;color:white;">Type de carburant: {{ car.type_carburant}}</p>
-    {%if car.disponibilite%}
-    <p style="font-weight:bold;color:green">disponible</p>
-    {%else%}
-    <p style="font-weight:bold;color:red">non disponible</p>
-    {%endif%}
+{% block content %}
+<style>
+    body {
+        background: #ff4584 linear-gradient(225deg, #e91e63, #03a9f4);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
 
-    {% if user.is_authenticated %}
+    h1 {
+        color: white;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    p {
+        color: white;
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+
+    img {
+        max-width: 500px;
+        display: block;
+        margin: 0px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .status {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .available {
+        color: green;
+    }
+
+    .unavailable {
+        color: red;
+    }
+
+    form {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+        transition: transform 0.3s;
+    }
+
+    form:hover {
+        transform: scale(1.02); /* Léger effet de zoom */
+    }
+
+    label {
+        color: white;
+        font-weight: bold;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.3);
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    input[type="date"],
+    input[type="submit"] {
+        border-radius: 5px;
+        padding: 10px;
+        width: calc(50% - 10px);
+        margin: 5px 5px 10px 0;
+    }
+
+    input[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #218838;
+        transform: translateY(-2px); /* Légère élévation au survol */
+    }
+
+    a {
+        text-decoration: underline;
+        color: white;
+        transition: color 0.3s, transform 0.2s;
+    }
+
+    a:hover {
+        color: #ffc107; /* Couleur d'accentuation au survol */
+        transform: scale(1.05); /* Légère augmentation de taille au survol */
+    }
+</style>
+
+<h1>{{ car.model }}</h1>
+<p><strong>Prix journalier: {{ car.prix_location }} F</strong></p>
+
+{% if car.img_vehicule %}
+    <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">
+{% endif %}
+
+<p class="status">Type de carburant: {{ car.type_carburant }}</p>
+{% if car.disponibilite %}
+    <p class="status available">Disponible</p>
+{% else %}
+    <p class="status unavailable">Non disponible</p>
+{% endif %}
+
+{% if user.is_authenticated %}
     <form method="GET">
         {% csrf_token %}
-        <label for="commentaire">commentaire</label>
-        <textarea id="commentaire" name="commentaire"></textarea>
-        <input type="submit">
+        <label for="commentaire">Commentaire</label>
+        <textarea id="commentaire" name="commentaire" placeholder="Ajoutez votre commentaire ici..."></textarea>
+        <input type="submit" value="Envoyer">
     </form>
-    <h1><span style="text-decoration:underline">Commencer par faire une reservation</span></h1>
+
+    <h1><span style="text-decoration:underline">Commencer par faire une réservation</span></h1>
     <form method="POST">
-         {% csrf_token %}
-    <label for="date-deb"><span style="color:green;">Date de début</span></label>
-    <input type="date" id="date-deb" name="date_deb" required>
+        {% csrf_token %}
+        <label for="date-deb"><span style="color:green;">Date de début</span></label>
+        <input type="date" id="date-deb" name="date_deb" required>
         <label for="date-fin"><span style="color:green;">Date fin</span></label>
-    <input type="date" id="date-fin" name="date_fin" required>
-    <input type="submit" value="Reserver">
+        <input type="date" id="date-fin" name="date_fin" required>
+        <input type="submit" value="Réserver">
     </form>
-    {%endif%}
-
-
-
-
-
-</body>
-</html>
+{% else %}
+    <a href="{% url 'login' %}">
+        <h1><span style="text-decoration:underline">Commencer par faire une réservation</span></h1>
+    </a>
+{% endif %}
+{% endblock %}
