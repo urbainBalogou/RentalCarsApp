@@ -19,7 +19,8 @@
     {% for car in cars %}
     <div class="car">
         <h2 class="nom">{{ car.marque }}</h2>
-        <p class="prix">{{ car.prix_location }} F CFA</p>
+        <p class="prix"><em>course en ville: </em>{{ car.prix_location_ville }} F CFA</p>
+        <p class="prix"><em>course hors ville: </em>{{ car.prix_location_hors_ville }} F CFA</p>
         {% if car.img_vehicule %}
             <a href="{{ car.get_absolute_url }}">
                 <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">

@@ -7,20 +7,19 @@ body {
     background-size: cover;
     color: #333;
 }
-img{
-    max-width:300px;
-}
 
 /* Header Styles */
 header {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur des écrans plus petits */
 }
 
 nav ul {
@@ -28,10 +27,11 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur des écrans plus petits */
 }
 
 nav ul li {
-    margin-right: 20px;
+    margin-right: 30px;
 }
 
 nav ul li a {
@@ -39,74 +39,40 @@ nav ul li a {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 4px;
 }
 
 nav ul li a:hover {
-    color: #FFAA00;
+    background-color: rgba(255, 170, 0, 0.7);
+    color: black;
 }
 
-/* Hero Section */
-.hero {
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.hero-text h2 {
-    font-size: 3rem;
-    color: white;
-    margin-bottom: 20px;
-}
-
-.hero-text p {
-    font-size: 1.2rem;
-    color: #CCCCCC;
-    margin-bottom: 40px;
-}
-
-.cta-button {
-    background-color: #FFAA00;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.cta-button:hover {
-    background-color: #FF8800;
-}
-
-/* Footer */
+/* Footer Styles */
 footer {
     background-color: #222;
     color: white;
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
 footer p {
-    margin: 0;
+    margin: 5px 0;
     font-size: 0.9rem;
 }
 
-
+/* Auth Links Styles */
 .auth-links {
     display: flex;
-    align-items: center; /* Centre verticalement les éléments */
+    align-items: center;
 }
 
 .auth-links span {
-    color: white; /* Couleur du nom d'utilisateur */
-    margin-right: 10px; /* Espace entre le nom d'utilisateur et les liens */
+    color: white;
+    margin-right: 10px;
 }
 
 .auth-links a {
@@ -114,12 +80,48 @@ footer p {
     font-weight: 500;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .auth-links a:hover {
-    background-color: rgba(255, 255, 255, 0.4); /* Couleur au survol */
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #FFAA00;
+}
+
+/* Image Styles */
+img {
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column; /* Empile les éléments en colonne sur les petits écrans */
+        align-items: flex-start; /* Alignement à gauche */
+    }
+
+    nav ul {
+        flex-direction: column; /* Menu vertical sur les petits écrans */
+        width: 100%; /* Prendre toute la largeur */
+    }
+
+    nav ul li {
+        margin-bottom: 10px; /* Espacement entre les éléments du menu */
+        margin-right: 0; /* Réinitialiser la marge droite pour les petits écrans */
+    }
+
+    footer {
+        font-size: 0.8rem; /* Réduire la taille de la police du footer sur les petits écrans */
+    }
+}
+
+@media (max-width: 480px) {
+    nav ul li {
+        margin-bottom: 5px; /* Réduire l'espacement entre les éléments du menu */
+    }
 }

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login, logout, authenticate
+from list.models import Client
 
 User = get_user_model()
 
@@ -8,8 +9,18 @@ def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
+        mail = request.POST.get("mail")
+        nom = request.POST.get("username")
+        prenom = request.POST.get("username")
         user = User.objects.create_user(username=username,
-                                        password=password)
+                                        password=password,
+                                        email=mail)
+
+
+        client = Client(nom=nom,
+                        prenom=prenom,
+                        email=mail)
+        client.save()
 
         login(request, user)
         return redirect('index')

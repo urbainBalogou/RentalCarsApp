@@ -16,8 +16,18 @@ def index(request):
 
 def car_detail(request, slug):
     car = get_object_or_404(Voiture, slug=slug)
+    print("car1",car)
     if request.method == 'POST':
         # Récupérer les valeurs entrées dans le formulaire
+        avec_chauffeur = request.POST.get('chauffeur')
+        print(avec_chauffeur)
+        if avec_chauffeur == "avec chauffeur":
+            avec_chauffeur = True
+        else:
+            avec_chauffeur = False
+        region = request.POST.get('region')
+
+        lieu = request.POST.get('lieu')
         date_deb = request.POST.get('date_deb')
         date_fin = request.POST.get('date_fin')
 
@@ -25,7 +35,7 @@ def car_detail(request, slug):
         # Créer une instance de modèle Reservation et enregistrer les données
         user = Client(nom=request.user)
         user.save()
-        reserve = Reservation(deb_location=date_deb, fin_location=date_fin, client=user, voiture=car)
+        reserve = Reservation(region=region,avec_chauffeur=avec_chauffeur,lieu=lieu, deb_location=date_deb, fin_location=date_fin, client=user, voiture=car)
         reserve.save()
 
 
@@ -33,11 +43,16 @@ def car_detail(request, slug):
         return HttpResponse('Reservation effectué avec succès')
     if request.method == 'GET':
         comment = request.GET.get('commentaire')
-        user = Client(nom=request.user)
-        user.save()
-        commentaire = Commentaire(client=user, voiture=car, content=comment)
-        commentaire.save()
-        return render(request,'list/detail.html',context={'car': car})
+        if comment:
+
+
+            user = Client(nom=request.user)
+
+            commentaire = Commentaire(client=user, voiture=car, content=comment)
+            user.save()
+            commentaire.save()
+            return render(request,'list/detail.html',context={'car': car})
+
     return render(request, 'list/detail.html', context={'car': car})
 
 

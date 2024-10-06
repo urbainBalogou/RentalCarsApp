@@ -103,10 +103,23 @@
         color: #ffc107; /* Couleur d'accentuation au survol */
         transform: scale(1.05); /* Légère augmentation de taille au survol */
     }
+    input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    fieldset {
+        border: none; /* Remove default border */
+        margin-bottom: 15px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #218838; /* Couleur au survol */
+    }
 </style>
 
 <h1>{{ car.model }}</h1>
-<p><strong>Prix journalier: {{ car.prix_location }} F</strong></p>
+<p><strong>Prix journalier(en ville): {{ car.prix_location_ville }} F</strong></p>
+<p><strong>Prix journalier(hors ville): {{ car.prix_location_hors_ville }}F ou plus en fonction de la région </strong></p>
 
 {% if car.img_vehicule %}
     <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">
@@ -123,18 +136,42 @@
     <form method="GET">
         {% csrf_token %}
         <label for="commentaire">Commentaire</label>
-        <textarea id="commentaire" name="commentaire" placeholder="Ajoutez votre commentaire ici..."></textarea>
+        <textarea id="commentaire" name="commentaire" placeholder="Ajoutez votre commentaire ici que ce soit sur nos chauffeurs et la voiture ainsi que vos suggestions..."></textarea>
         <input type="submit" value="Envoyer">
     </form>
 
     <h1><span style="text-decoration:underline">Commencer par faire une réservation</span></h1>
     <form method="POST">
-        {% csrf_token %}
-        <label for="date-deb"><span style="color:green;">Date de début</span></label>
-        <input type="date" id="date-deb" name="date_deb" required>
-        <label for="date-fin"><span style="color:green;">Date fin</span></label>
-        <input type="date" id="date-fin" name="date_fin" required>
-        <input type="submit" value="Réserver">
+       {% csrf_token %}
+
+    <label for="date-deb"><span style="color:green;">Date de début</span></label>
+    <input type="date" id="date-deb" name="date_deb" required>
+
+    <label for="date-fin"><span style="color:green;">Date fin</span></label>
+    <input type="date" id="date-fin" name="date_fin" required>
+<label for="region"><span style="color:green;">Selectionnez une région</span></label>
+    <select name="region" id="region" required>
+      <option value="maritime">maritime</option>
+      <option value="plateau">plateau</option>
+      <option value="centrale">centrale</option>
+      <option value="kara">kara</option>
+        <option value="savane">savane</option>
+    </select>
+    <label for="lieu"><span style="color:green;">Lieu</span></label>
+    <input type="text" id="lieu" name="lieu" placeholder="Entrer le lieu" required>
+        <textarea id="detail" name="commentaire" placeholder="Donner nous plus détails(Champ non obligatoire)..."></textarea>
+
+    <fieldset>
+        <legend style="color: green;">Choisissez une option:</legend>
+        <label>
+            <input type="radio" name="chauffeur" value="avec chauffeur" required> Avec chauffeur
+        </label>
+        <label>
+            <input type="radio" name="chauffeur" value="sans chauffeur"> Sans chauffeur
+        </label>
+    </fieldset>
+
+    <input type="submit" value="Réserver" style="background-color: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
     </form>
 {% else %}
     <a href="{% url 'login' %}">

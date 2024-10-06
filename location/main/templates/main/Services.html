@@ -2,150 +2,159 @@
 <title>Nos Services</title>
 {% block content %}
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Global Styles */
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(225deg, #e91e63, #03a9f4);
-    color: #333;
-}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        background-color: #f5f5f5; /* Couleur de fond légère */
+    }
 
-.services-container {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px 40px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #e91e63;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #e91e63;
-    padding-bottom: 10px;
-}
-
-p {
-    line-height: 1.8;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    color: #555;
-}
-
-h2 {
-    color: #03a9f4;
-    margin-bottom: 15px;
-}
-
-ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-ul li {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    position: relative;
-    padding-left: 25px;
-    color: #333;
-}
-
-ul li::before {
-    content: '✓';
-    color: #e91e63;
-    position: absolute;
-    left: 0;
-    top: 5px;
-    font-size: 1.2rem;
-}
-
-.contact-button {
-    display: block;
-    width: 200px;
-    margin: 30px auto 0;
-    padding: 15px;
-    text-align: center;
-    background-color: #03a9f4;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.contact-button:hover {
-    background-color: #e91e63;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
     .services-container {
-        padding: 20px;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #fff; /* Couleur de fond du conteneur */
     }
 
     h1 {
-        font-size: 2rem;
+        text-align: center;
+        color: #e91e63;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e91e63;
+        padding-bottom: 10px;
     }
 
-    p, ul li {
-        font-size: 1rem;
+    p {
+        line-height: 1.8;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        color: #555;
+    }
+
+    h2 {
+        color: #03a9f4;
+        margin-bottom: 15px;
+        font-size: 1.8rem; /* Taille de police pour h2 */
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul li {
+        margin: 10px 0;
+        font-size: 1.1rem;
+        position: relative;
+        padding-left: 25px;
+        color: #333;
+    }
+
+    ul li::before {
+        content: '✓';
+        color: #e91e63;
+        position: absolute;
+        left: 0;
+        top: 5px;
+        font-size: 1.2rem;
     }
 
     .contact-button {
-        width: 100%;
-        padding: 12px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .services-container {
+        display: block;
+        width: 200px;
+        margin: 30px auto 0;
         padding: 15px;
+        text-align: center;
+        background-color: #03a9f4;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
     }
 
-    h1 {
-        font-size: 1.8rem;
+    .contact-button:hover {
+        background-color: #e91e63;
     }
 
-    p, ul li {
-        font-size: 0.95rem;
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .services-container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+
+        p, ul li {
+            font-size: 1rem;
+        }
+
+        .contact-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+        }
     }
 
-    .contact-button {
-        width: 100%;
-        padding: 10px;
-        font-size: 0.9rem;
-    }
-}
+    @media (max-width: 480px) {
+        .services-container {
+            padding: 15px;
+        }
 
-    </style>
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        p, ul li {
+            font-size: 0.95rem;
+        }
+
+        .contact-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
 <div class="services-container">
-        <h1>Nos Services</h1>
+    <h1>Nos Services</h1>
 
-        <p>Chez nous, l'excellence est notre devise ! Nous mettons à votre disposition une flotte de voitures d'exception, soigneusement sélectionnées pour répondre aux exigences des voyageurs les plus raffinés. Que vous ayez besoin d'une voiture avec chauffeur pour profiter d'un service VIP inégalé, ou que vous préfériez conduire vous-même, nous avons la solution idéale. Nos véhicules allient confort, sécurité et performance, pour vous garantir un voyage serein et inoubliable.</p>
+    <p>Chez nous, l'excellence est notre devise ! Nous mettons à votre disposition une flotte de voitures d'exception, soigneusement sélectionnées pour répondre aux exigences des voyageurs les plus raffinés. Que vous ayez besoin d'une voiture avec chauffeur pour profiter d'un service VIP inégalé, ou que vous préfériez conduire vous-même, nous avons la solution idéale. Nos véhicules allient confort, sécurité et performance, pour vous garantir un voyage serein et inoubliable.</p>
 
-        <p>Mais ce n'est pas tout ! En tant qu'experts passionnés par la technologie, nous offrons une gamme variée de services qui dépasse la simple location de voitures. Nous sommes spécialisés dans la <strong>conception de logiciels métier</strong> sur mesure, adaptés aux besoins spécifiques de votre entreprise, pour vous accompagner dans votre transformation digitale. Que ce soit pour la gestion de vos stocks, l'automatisation des processus ou encore la création de plateformes interactives, nous maîtrisons tous les aspects du développement logiciel, de l'idée à la réalisation.</p>
+    <p>Mais ce n'est pas tout ! En tant qu'experts passionnés par la technologie, nous offrons une gamme variée de services qui dépasse la simple location de voitures. Nous sommes spécialisés dans la <strong>conception de logiciels métier</strong> sur mesure, adaptés aux besoins spécifiques de votre entreprise, pour vous accompagner dans votre transformation digitale. Que ce soit pour la gestion de vos stocks, l'automatisation des processus ou encore la création de plateformes interactives, nous maîtrisons tous les aspects du développement logiciel, de l'idée à la réalisation.</p>
 
-        <h2>Nos prestations comprennent également :</h2>
-        <ul>
-            <li><strong>Conception graphique</strong> : Création de bannières, affiches, bâches et autres supports visuels pour promouvoir efficacement votre entreprise ou vos événements.</li>
-            <li><strong>Maintenance informatique</strong> : Nous assurons le bon fonctionnement de votre parc informatique avec des services de maintenance réactifs et sécurisés.</li>
-            <li><strong>Création de sites web</strong> : Du site vitrine à la plateforme e-commerce, nous vous offrons des designs modernes, optimisés pour le référencement.</li>
-            <li><strong>Conseils en stratégie digitale</strong> : Améliorez votre présence en ligne avec nos solutions de marketing digital, incluant le SEO, la gestion des réseaux sociaux et la publicité en ligne.</li>
-        </ul>
+    <h2>Nos prestations comprennent également :</h2>
+    <ul>
+        <li><strong>Conception graphique</strong> : Création de bannières, affiches, bâches et autres supports visuels pour promouvoir efficacement votre entreprise ou vos événements.</li>
+        <li><strong>Maintenance informatique</strong> : Nous assurons le bon fonctionnement de votre parc informatique avec des services de maintenance réactifs et sécurisés.</li>
+        <li><strong>Création de sites web</strong> : Du site vitrine à la plateforme e-commerce, nous vous offrons des designs modernes, optimisés pour le référencement.</li>
+        <li><strong>Conseils en stratégie digitale</strong> : Améliorez votre présence en ligne avec nos solutions de marketing digital, incluant le SEO, la gestion des réseaux sociaux et la publicité en ligne.</li>
+    </ul>
 
-        <p>Nous croyons fermement que chaque client est unique, et c'est pourquoi nous mettons un point d'honneur à offrir des services personnalisés, où l'attention aux détails et la satisfaction totale sont garanties.</p>
+    <p>Nous croyons fermement que chaque client est unique, et c'est pourquoi nous mettons un point d'honneur à offrir des services personnalisés, où l'attention aux détails et la satisfaction totale sont garanties.</p>
 
-        <p>Faites confiance à notre expertise pour donner vie à vos projets les plus ambitieux, et laissez-nous vous accompagner avec professionnalisme, passion et une touche d'innovation. Avec nous, c'est la qualité, la créativité et la performance au rendez-vous.</p>
+    <p>Faites confiance à notre expertise pour donner vie à vos projets les plus ambitieux, et laissez-nous vous accompagner avec professionnalisme, passion et une touche d'innovation. Avec nous, c'est la qualité, la créativité et la performance au rendez-vous.</p>
 
-        <a href="tel:+22890122357" class="contact-button">Nous Contacter</a>
-    </div>
+    <a href="tel:+22890122357" class="contact-button">Nous Contacter</a>
+</div>
 
 {% endblock %}

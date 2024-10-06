@@ -4,49 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Agence de Location</title>
-    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <!--link rel="stylesheet" href="{% static 'main/style.css' %}"-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4; /* Couleur de fond douce */
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.85); /* Plus sombre pour un meilleur contraste */
+            padding: 15px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur des écrans plus petits */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur des écrans plus petits */
+        }
+
+        nav ul li {
+            margin-right: 20px; /* Réduction de la marge pour une apparence plus compacte */
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px; /* Coins arrondis pour un look moderne */
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 170, 0, 0.7);
+            color: black;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        /* Auth Links Styles */
+        .auth-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-links span {
+            color: white;
+            margin-right: 10px;
+        }
+
+        .auth-links a {
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #FFAA00;
+        }
+
+        /* Image Styles */
+        img {
+            max-width: 200px; /* Réduction de la taille de l'image pour les écrans plus petits */
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column; /* Empile les éléments en colonne sur les petits écrans */
+                align-items: flex-start; /* Alignement à gauche */
+            }
+
+            nav ul {
+                flex-direction: column; /* Menu vertical sur les petits écrans */
+                width: 100%; /* Prendre toute la largeur */
+            }
+
+            nav ul li {
+                margin-bottom: 10px; /* Espacement entre les éléments du menu */
+                margin-right: 0; /* Réinitialiser la marge droite pour les petits écrans */
+            }
+
+            footer {
+                font-size: 0.8rem; /* Réduire la taille de la police du footer sur les petits écrans */
+            }
+
+            img {
+                max-width: 150px; /* Ajustement de la taille de l'image pour les petits écrans */
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul li {
+                margin-bottom: 5px; /* Réduire l'espacement entre les éléments du menu */
+            }
+
+            footer p {
+                font-size: 0.7rem; /* Réduction de la taille de la police du footer pour les très petits écrans */
+            }
+        }
+    </style>
 </head>
 <body>
-   <header>
-    <div class="header-content">
-        <h1><a href="{% url 'main' %}"><img src="{% static 'main/images/img.png' %}" alt="Logo de l'agence"></a></h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'nos_Services' %}">Nos Services</a></li>
-                <li><a href="{% url 'index' %}">Nos Véhicules</a></li>
-                <li><a href="#">Contrats</a></li>
-                <li><a href="tel:+22890122357">WhatsApp</a></li>
-                <li><a href="mailto:elonovacar@gmail.com">Email</a></li>
-            </ul>
-            <ul>
-                <li>
-                    <div class="auth-links">
-                        {% if user.is_authenticated %}
-                            <span>{{ user.username }}</span>
-                            <a href="{% url 'logout' %}">Déconnexion</a>
-                        {% else %}
-                            <a href="{% url 'login' %}">Connexion</a>
-                            <a href="{% url 'signup' %}">S'inscrire</a>
-                        {% endif %}
-                    </div>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
-    {% block content %}
+    <header>
+        <div class="header-content">
+            <h1>
+                <a href="{% url 'main' %}">
+                    <img src="{% static 'main/images/img.png' %}" alt="Logo de l'agence">
+                </a>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'nos_Services' %}">Nos Services</a></li>
+                    <li><a href="{% url 'index' %}">Nos Véhicules</a></li>
+                    <li><a href="#">Contrats</a></li>
+                    <li><a href="tel:+22890122357">WhatsApp</a></li>
+                    <li><a href="mailto:elonovacar@gmail.com">Email</a></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div class="auth-links">
+                            {% if user.is_authenticated %}
+                                <span>{{ user.username }}</span>
+                                <a href="{% url 'logout' %}">Déconnexion</a>
+                            {% else %}
+                                <a href="{% url 'login' %}">Connexion</a>
+                                <a href="{% url 'signup' %}">S'inscrire</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
+    {% block content %}
     {% endblock %}
-   <footer>
+
+    <footer>
         <p>&copy; 2024 ELONOVACAR - Tous droits réservés</p>
         <p>Contact Développeur: +22870436043</p>
         <a href="#"><p>Portfolio du Développeur:</p></a>
-       <p>Quartier Attiégou, non loin de l’EPP Attiégou</p>
-       <p>Tél : (+228) 99 83 45 48 / 90 12 23 57</p>
-       <p>NIF : 1001876719</p>
-
+        <p>Quartier Attiégou, non loin de l’EPP Attiégou</p>
+        <p>Tél : (+228) 99 83 45 48 / 90 12 23 57</p>
+        <p>NIF : 1001876719</p>
     </footer>
-
 </body>
 </html>
