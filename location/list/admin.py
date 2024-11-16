@@ -5,7 +5,7 @@ from django.urls import path
 
 
 class VoitureAdmin(admin.ModelAdmin):
-    list_display = ("marque", "model", "disponibilite")
+    list_display = ("marque", "model","nombre_siege", "disponibilite","climatisation")
 
 
 class ClientAdmin(admin.ModelAdmin):

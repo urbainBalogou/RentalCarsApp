@@ -21,11 +21,13 @@ class Voiture(models.Model):
     marque = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)
     model = models.CharField(max_length=30)
+    nombre_siege = models.PositiveIntegerField(default=5)
     type_carburant = models.CharField(max_length=30)
     prix_location_ville = models.IntegerField(default=0)
     prix_location_hors_ville = models.IntegerField(default=0)
     img_vehicule = models.ImageField(upload_to="voitures", blank=True, null=True)
     disponibilite = models.BooleanField(default=True)
+    climatisation = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.model},{self.marque}"

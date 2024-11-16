@@ -36,7 +36,7 @@
     }
 
     .available {
-        color: green;
+        color: blue;
     }
 
     .unavailable {
@@ -118,8 +118,8 @@
 </style>
 
 <h1>{{ car.model }}</h1>
-<p><strong>Prix journalier(en ville): {{ car.prix_location_ville }} F</strong></p>
-<p><strong>Prix journalier(hors ville): {{ car.prix_location_hors_ville }}F ou plus en fonction de la région </strong></p>
+<p><strong>Prix journalier(en ville): <span style="font-style:italic; background-color:blue">{{ car.prix_location_ville }} F</span></strong></p>
+<p><strong>Prix journalier(hors ville): <span style="font-style:italic; background-color:blue">{{ car.prix_location_hors_ville }}F</span> ou plus en fonction de la région </strong></p>
 
 {% if car.img_vehicule %}
     <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">
@@ -130,6 +130,11 @@
     <p class="status available">Disponible</p>
 {% else %}
     <p class="status unavailable">Non disponible</p>
+{% endif %}
+{% if car.climatisation %}
+    <p class="status available">Climé</p>
+{% else %}
+    <p class="status unavailable">Sans climatisation</p>
 {% endif %}
 
 {% if user.is_authenticated %}
@@ -149,7 +154,7 @@
 
     <label for="date-fin"><span style="color:green;">Date fin</span></label>
     <input type="date" id="date-fin" name="date_fin" required>
-<label for="region"><span style="color:green;">Selectionnez une région</span></label>
+<label for="region"><span style="color:green;">Selectionnez la région de l'utilisation du vehicule</span></label>
     <select name="region" id="region" required>
       <option value="maritime">maritime</option>
       <option value="plateau">plateau</option>
@@ -157,9 +162,9 @@
       <option value="kara">kara</option>
         <option value="savane">savane</option>
     </select>
-    <label for="lieu"><span style="color:green;">Lieu</span></label>
-    <input type="text" id="lieu" name="lieu" placeholder="Entrer le lieu" required>
-        <textarea id="detail" name="commentaire" placeholder="Donner nous plus détails(Champ non obligatoire)..."></textarea>
+    <label for="lieu"><span style="color:green;">Lieu de livraison:</span></label>
+    <input type="text" id="lieu" name="lieu" placeholder="Entrer le lieu:" required>
+        <textarea id="detail" name="commentaire" placeholder="Donner nous plus de détails(Champ non obligatoire)..."></textarea>
 
     <fieldset>
         <legend style="color: green;">Choisissez une option:</legend>
