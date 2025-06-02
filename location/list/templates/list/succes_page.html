@@ -32,6 +32,68 @@
         font-size: 1.2rem;
         margin-bottom: 20px;
     }
+       .messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    position: relative;
+    width: 90%; /* Largeur ajustée */
+    max-width: 600px;
+    z-index: 9999;
+}
+
+.messages li {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    word-wrap: break-word; /* Évite les débordements de texte */
+}
+
+.messages .success {
+    background-color: #4CAF50; /* Vert */
+    border: 1px solid #388E3C;
+}
+
+.messages .error {
+    background-color: #f44336; /* Rouge */
+    border: 1px solid #d32f2f;
+}
+
+.messages .info {
+    background-color: #2196F3; /* Bleu */
+    border: 1px solid #1976D2;
+}
+
+.messages .warning {
+    background-color: #FF9800; /* Orange */
+    border: 1px solid #F57C00;
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.messages li {
+    animation: fadeInOut 5s ease-in-out forwards;
+}
 
     .cta-button {
         display: inline-block;
@@ -76,13 +138,20 @@
     }
 </style>
 
-
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 
 <main>
     <section class="hero">
         <div class="hero-text">
             <h2>RESERVATION EFFECTUÉE AVEC SUCCÈS</h2>
-            <p>Un email de confirmation et de la facture proforma associée à votre demande vous sera envoyé dans les plus brefs délais</p>
+            <p>Un email de confirmation et de la facture proforma associée à votre demande vous sera envoyé dans les
+                plus brefs délais</p>
             <p>Souhaitez-vous louer plusieurs véhicules en même temps <br> <a href="">Ecrivez-nous par mail</a></p>
             <a href="{% url 'index' %}" class="cta-button">Faire une autre reservation</a>
         </div>

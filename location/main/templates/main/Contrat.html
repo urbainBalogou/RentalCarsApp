@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+<title>Contrat de Location de Véhicule</title>
+{% block content %}
+
+<style>
+
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    h1, h2, h3 {
+        color: #0078d7;
+        text-align: center;
+    }
+
+    .container ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .container ul li {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .container ul li:hover {
+        background: #0078d7;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    p {
+        margin: 15px 0;
+        line-height: 1.8;
+    }
+
+    .section-header {
+        background: #0078d7;
+        color: #fff;
+        padding: 10px;
+        margin: -20px -20px 20px -20px;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 15px;
+        background: #0078d7;
+        color: #fff;
+        border-radius: 0 0 8px 8px;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+
+        ul li {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="section-header">Conditions Générales</div>
+    <section>
+        <ul>
+            <li>Les véhicules sont loués pleins avec chauffeur. Cependant, une location sans chauffeur est possible sous réserve de négociation, entraînant une augmentation ou diminution du prix selon les termes convenus.</li>
+            <li>Le client est tenu de rendre le véhicule dans son état initial.</li>
+            <li>Les réparations pour dommages non couverts par l'assurance sont à la charge du client.</li>
+            <li>La réservation en ligne est gratuite. Pour le paiement, le client s'engage à régler un quart (1/4) du montant total lors de la réservation. Le reste du montant est dû lorsque le véhicule est restitué.</li>
+            <li>Le client peut également choisir de régler la totalité du montant au moment de la réservation s'il le souhaite.</li>
+        </ul>
+    </section>
+
+    <div class="section-header">Assurance et Entretien</div>
+    <section>
+        <p>Les véhicules sont assurés au tiers et régulièrement entretenus. Cela signifie que les dommages causés à des tiers sont couverts, mais pas ceux subis par nos véhicules.</p>
+    </section>
+
+    <div class="section-header">Services Supplémentaires</div>
+    <section>
+        <ul>
+            <li>Remplacement en cas de panne dans un délai raisonnable selon la localisation.</li>
+            <li>Chauffeurs expérimentés et formés pour garantir votre sécurité.</li>
+        </ul>
+    </section>
+</div>
+
+{% endblock %}

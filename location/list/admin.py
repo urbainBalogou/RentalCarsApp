@@ -1,11 +1,40 @@
 from django.contrib import admin
-from.models import *
+from .models import *
 from django.utils.html import format_html
 from django.urls import path
+from django.contrib import admin
+from django.contrib.auth.models import Group
+
+admin.site.unregister(Group)
+
+
+class EntretienAdmin(admin.ModelAdmin):
+    list_display = ("voiture__marque", "type_entretien")
+    search_field = ("type_entretien",)
+    list_filter = ("date",)
+
+
+admin.site.register(Entretien, EntretienAdmin)
+
+
+class ChauffeurAdmin(admin.ModelAdmin):
+    list_display = ("nom", "prenom")
+    search_field = ("nom", "prenom")
+    list_filter = ("disponible", )
+
+
+admin.site.register(Chauffeur, ChauffeurAdmin)
+
+
+class VoitureDocInline(admin.TabularInline):
+    model = Document
+    extra = 1
 
 
 class VoitureAdmin(admin.ModelAdmin):
-    list_display = ("marque", "model","nombre_siege", "disponibilite","climatisation")
+    list_display = ("marque", "model", "nombre_siege", "disponibilite", "climatisation")
+    readonly_fields = ('slug',)
+    inlines = [VoitureDocInline]
 
 
 class ClientAdmin(admin.ModelAdmin):
@@ -15,7 +44,7 @@ class ClientAdmin(admin.ModelAdmin):
 class FactureAdmin(admin.ModelAdmin):
     list_display = ['id', 'reservation', 'montant_facture', 'date_facture', 'est_paye']
 
-    # Fonction pour afficher le bouton d'exportation
+
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
         extra_context['show_export_button'] = True  # Ajouter une variable de contexte pour afficher le bouton
@@ -48,5 +77,4 @@ admin.site.register(Client, ClientAdmin)
 admin.site.register(Voiture, VoitureAdmin)
 admin.site.register(Reservation)
 admin.site.register(Facture,FactureAdmin)
-
 admin.site.register(Commentaire)

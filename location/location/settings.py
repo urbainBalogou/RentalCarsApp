@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -50,6 +52,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backend.EmailBackend',  # Notre backend personnalisé
+    'django.contrib.auth.backends.ModelBackend',  # Auth classique (par username)
 ]
 
 ROOT_URLCONF = 'location.urls'
@@ -118,6 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
@@ -134,3 +142,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'elonovacar@gmail.com'
 EMAIL_HOST_PASSWORD = 'cwps sknu xoaj ulun'
+DEFAULT_FROM_EMAIL = 'elonovacar@site.com'

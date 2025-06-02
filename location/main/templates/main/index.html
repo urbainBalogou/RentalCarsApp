@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-
 <style>
     /* Styles pour la section hero */
-    .hero {
-
-        background-size: cover;
+  .hero {
+        background-image: url('{% static "menu/images/background_.jpg" %}');
+        background-size: 50% auto; /* Redimensionner l'image à 50% de sa largeur d'origine */
+        background-size: cover; /* L'image couvrira toute la section */
         background-position: center;
-        height: 80vh; /* Hauteur de la section hero */
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 65vh; /* Hauteur de la section hero */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,7 +41,7 @@
         padding: 12px 24px;
         font-size: 1rem;
         color: #fff;
-        background-color: rgba(255, 170, 0, 0.9);
+        background-color: #ff4584;
         border: none;
         border-radius: 5px;
         text-decoration: none;
@@ -76,8 +79,6 @@
     }
 </style>
 
-
-
 <main>
     <section class="hero">
         <div class="hero-text">
@@ -88,6 +89,3 @@
     </section>
 </main>
 {% endblock %}
-
-
-

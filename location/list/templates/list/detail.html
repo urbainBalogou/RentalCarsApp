@@ -3,184 +3,560 @@
 {% block content %}
 <style>
     body {
-        background: #ff4584 linear-gradient(225deg, #e91e63, #03a9f4);
-        font-family: Arial, sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin: 0;
-        padding: 20px;
+        padding: 0;
+        background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+        background-attachment: fixed;
+        color: white;
     }
 
-    h1 {
+    .content-container {
+        padding: 25px 15px;
+        max-width: 1200px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .page-title {
         color: white;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
-    p {
+    .car-subtitle {
         color: white;
-        font-size: 1.2em;
-        margin: 10px 0;
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     }
 
-    img {
-        max-width: 500px;
-        display: block;
-        margin: 0px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* Cards design - Improved for responsiveness */
+    .car-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin-bottom: 30px;
     }
 
-    .status {
-        font-weight: bold;
-        font-size: 1.1em;
+    .car-image-card {
+        flex: 1;
+        min-width: 280px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
     }
 
-    .available {
-        color: blue;
+    .car-image-card:hover {
+        transform: translateY(-5px);
     }
 
-    .unavailable {
-        color: red;
-    }
-
-    form {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        margin-top: 20px;
-        transition: transform 0.3s;
-    }
-
-    form:hover {
-        transform: scale(1.02); /* Léger effet de zoom */
-    }
-
-    label {
-        color: white;
-        font-weight: bold;
-    }
-
-    textarea {
+    .car-image-wrapper {
         width: 100%;
-        height: 100px;
-        border-radius: 5px;
-        padding: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.3);
+        /* Changed from fixed height to aspect-ratio for better responsiveness */
+        aspect-ratio: 4/3;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .car-image-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .car-image-wrapper img:hover {
+        transform: scale(1.05);
+    }
+
+    .comment-form {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .car-details-card {
+        flex: 2;
+        min-width: 280px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Table styles - Improved for mobile */
+    .car-specs-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .car-specs-table thead {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .car-specs-table th {
+        text-align: left;
+        padding: 15px;
         color: white;
-        margin-bottom: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
     }
 
-    input[type="date"],
-    input[type="submit"] {
-        border-radius: 5px;
-        padding: 10px;
-        width: calc(50% - 10px);
-        margin: 5px 5px 10px 0;
+    .car-specs-table td {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1rem;
     }
 
-    input[type="submit"] {
-        background-color: #28a745;
+    .car-specs-table tbody tr:nth-child(odd) {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .car-specs-table tbody tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Reservation styles */
+    .reservation-container {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px 20px;
+        margin-top: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .reservation-btn {
+        background: linear-gradient(135deg, #FF4584, #FF7676);
         color: white;
         border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 5px 15px rgba(255, 69, 132, 0.4);
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 300px;
     }
 
-    input[type="submit"]:hover {
-        background-color: #218838;
-        transform: translateY(-2px); /* Légère élévation au survol */
+    .reservation-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 69, 132, 0.6);
+        background: linear-gradient(135deg, #FF5F96, #FF8F8F);
     }
 
-    a {
-        text-decoration: underline;
-        color: white;
-        transition: color 0.3s, transform 0.2s;
+    .reservation-form {
+        display: none;
+        margin-top: 20px;
     }
 
-    a:hover {
-        color: #ffc107; /* Couleur d'accentuation au survol */
-        transform: scale(1.05); /* Légère augmentation de taille au survol */
-    }
-    input[type="radio"] {
-        margin-right: 10px;
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
     }
 
-    fieldset {
-        border: none; /* Remove default border */
+    .form-full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group {
         margin-bottom: 15px;
     }
 
-    input[type="submit"]:hover {
-        background-color: #218838; /* Couleur au survol */
+    .form-label {
+        display: block;
+        color: white;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .form-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 10px;
+    }
+
+    .option-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+
+    .option-radio {
+        width: 18px;
+        height: 18px;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #03A9F4, #3F51B5);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        font-weight: 600;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        box-shadow: 0 5px 15px rgba(3, 169, 244, 0.4);
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(3, 169, 244, 0.6);
+        background: linear-gradient(135deg, #039BE5, #3949AB);
+    }
+
+    /* Messages */
+    .messages {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px auto;
+        position: relative;
+        width: 90%;
+        max-width: 600px;
+        z-index: 9999;
+    }
+
+    .messages li {
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .messages .success {
+        background-color: #4CAF50;
+        border: 1px solid #388E3C;
+    }
+
+    .messages .error {
+        background-color: #f44336;
+        border: 1px solid #d32f2f;
+    }
+
+    .messages .info {
+        background-color: #2196F3;
+        border: 1px solid #1976D2;
+    }
+
+    .messages .warning {
+        background-color: #FF9800;
+        border: 1px solid #F57C00;
+    }
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        30% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        70% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+
+    .messages li {
+        animation: fadeInOut 5s ease-in-out forwards;
+    }
+
+    /* Enhanced Responsive design */
+    @media screen and (max-width: 992px) {
+        .car-container {
+            flex-direction: column;
+        }
+
+        .car-image-card, .car-details-card {
+            width: 100%;
+        }
+
+        .car-image-wrapper {
+            aspect-ratio: 16/9;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .content-container {
+            padding: 15px 10px;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .car-specs-table thead {
+            display: none;
+        }
+
+        .car-specs-table tbody tr {
+            display: block;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .car-specs-table td {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            text-align: right;
+        }
+
+        .car-specs-table td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .reservation-btn, .submit-btn {
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .form-options {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .car-image-wrapper {
+            aspect-ratio: 3/2;
+        }
+
+        .comment-form {
+            padding: 10px;
+        }
     }
 </style>
 
-<h1>{{ car.model }}</h1>
-<p><strong>Prix journalier(en ville): <span style="font-style:italic; background-color:blue">{{ car.prix_location_ville }} F</span></strong></p>
-<p><strong>Prix journalier(hors ville): <span style="font-style:italic; background-color:blue">{{ car.prix_location_hors_ville }}F</span> ou plus en fonction de la région </strong></p>
+<div class="content-container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
-{% if car.img_vehicule %}
-    <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">
-{% endif %}
+    <h1 class="page-title">{{ car.marque }} {{ car.model }}</h1>
 
-<p class="status">Type de carburant: {{ car.type_carburant }}</p>
-{% if car.disponibilite %}
-    <p class="status available">Disponible</p>
-{% else %}
-    <p class="status unavailable">Non disponible</p>
-{% endif %}
-{% if car.climatisation %}
-    <p class="status available">Climé</p>
-{% else %}
-    <p class="status unavailable">Sans climatisation</p>
-{% endif %}
+    <div class="car-container">
+        {% if car.img_vehicule %}
+        <div class="car-image-card">
+            <div class="car-image-wrapper">
+                <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }} {{ car.model }}">
+            </div>
 
-{% if user.is_authenticated %}
-    <form method="GET">
-        {% csrf_token %}
-        <label for="commentaire">Commentaire</label>
-        <textarea id="commentaire" name="commentaire" placeholder="Ajoutez votre commentaire ici que ce soit sur nos chauffeurs et la voiture ainsi que vos suggestions..."></textarea>
-        <input type="submit" value="Envoyer">
-    </form>
+            {% if user.is_authenticated %}
+            <div class="comment-form">
+                <form method="GET">
+                    <div class="form-group">
+                        <textarea name="commentaire" class="form-textarea"
+                                  placeholder="Partagez votre expérience avec cette voiture et son chauffeur..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Envoyer</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
 
-    <h1><span style="text-decoration:underline">Commencer par faire une réservation</span></h1>
-    <form method="POST">
-       {% csrf_token %}
+        <div class="car-details-card">
+            <table class="car-specs-table">
+                <thead>
+                <tr>
+                    <th>Carburant</th>
+                    <th>Climatisation</th>
+                    <th>Boite</th>
+                    <th>Nombre de sièges</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td data-label="Carburant">{{ car.type_carburant }}</td>
+                    <td data-label="Climatisation">{{ car.climatisation|yesno:"Oui,Non" }}</td>
+                    <td data-label="Boite">{{ car.boite }}</td>
+                    <td data-label="Nombre de sièges">{{ car.nombre_siege }}</td>
+                </tr>
+                </tbody>
+            </table>
 
-    <label for="date-deb"><span style="color:green;">Date de début</span></label>
-    <input type="date" id="date-deb" name="date_deb" required>
+            <div class="car-price-info">
+                <!-- Ici vous pouvez ajouter des informations supplémentaires sur les prix -->
+            </div>
+        </div>
+    </div>
 
-    <label for="date-fin"><span style="color:green;">Date fin</span></label>
-    <input type="date" id="date-fin" name="date_fin" required>
-<label for="region"><span style="color:green;">Selectionnez la région de l'utilisation du vehicule</span></label>
-    <select name="region" id="region" required>
-      <option value="maritime">maritime</option>
-      <option value="plateau">plateau</option>
-      <option value="centrale">centrale</option>
-      <option value="kara">kara</option>
-        <option value="savane">savane</option>
-    </select>
-    <label for="lieu"><span style="color:green;">Lieu de livraison:</span></label>
-    <input type="text" id="lieu" name="lieu" placeholder="Entrer le lieu:" required>
-        <textarea id="detail" name="commentaire" placeholder="Donner nous plus de détails(Champ non obligatoire)..."></textarea>
+    <div class="reservation-container">
+        <div id="reservation-button">
+            <button class="reservation-btn" onclick="showReservationForm()">Réserver maintenant</button>
+        </div>
 
-    <fieldset>
-        <legend style="color: green;">Choisissez une option:</legend>
-        <label>
-            <input type="radio" name="chauffeur" value="avec chauffeur" required> Avec chauffeur
-        </label>
-        <label>
-            <input type="radio" name="chauffeur" value="sans chauffeur"> Sans chauffeur
-        </label>
-    </fieldset>
+        <div id="reservation-form" class="reservation-form">
+            <h2 class="car-subtitle">Réserver cette voiture</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {% if not user.is_authenticated %}
+                <div class="form-group">
+                    <label class="form-label" for="client">Votre nom</label>
+                    <input type="text" id="client" name="client" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="tel">Votre numéro de téléphone</label>
+                    <input type="number" id="tel" name="tel" class="form-input" required>
+                </div>
+                {% endif %}
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="date-deb">Date de début</label>
+                        <input type="date" id="date-deb" name="date_deb" class="form-input" required>
+                    </div>
 
-    <input type="submit" value="Réserver" style="background-color: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
-    </form>
-{% else %}
-    <a href="{% url 'login' %}">
-        <h1><span style="text-decoration:underline">Commencer par faire une réservation</span></h1>
-    </a>
-{% endif %}
+                    <div class="form-group">
+                        <label class="form-label" for="date-fin">Date de fin</label>
+                        <input type="date" id="date-fin" name="date_fin" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="region">Région</label>
+                        <select name="region" id="region" class="form-select" required>
+                            <option value="maritime">Maritime</option>
+                            <option value="plateau">Plateau</option>
+                            <option value="centrale">Centrale</option>
+                            <option value="kara">Kara</option>
+                            <option value="savane">Savane</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="lieu">Lieu de livraison</label>
+                        <input type="text" id="lieu" name="lieu" class="form-input" required>
+                    </div>
+
+                    <div class="form-group form-full-width">
+                        <label class="form-label" for="detail">Détails supplémentaires</label>
+                        <textarea id="detail" name="detail_reservation" class="form-textarea"
+                                  placeholder="Donnez-nous plus de détails sur votre course (champ non obligatoire)..."></textarea>
+                    </div>
+
+                    <div class="form-group form-full-width">
+                        <label class="form-label">Options</label>
+                        <div class="form-options">
+                            <label class="option-label">
+                                <input type="radio" name="chauffeur" value="avec chauffeur" class="option-radio"
+                                       required> Avec chauffeur
+                            </label>
+                            <label class="option-label">
+                                <input type="radio" name="chauffeur" value="sans chauffeur" class="option-radio"> Sans
+                                chauffeur
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Demander un devis</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showReservationForm() {
+        document.getElementById('reservation-button').style.display = 'none';
+        document.getElementById('reservation-form').style.display = 'block';
+    }
+
+    // Définir les dates minimales pour la réservation
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+
+        document.getElementById('date-deb').min = formattedDate;
+        document.getElementById('date-fin').min = formattedDate;
+
+        // S'assurer que la date de fin est postérieure à la date de début
+        document.getElementById('date-deb').addEventListener('change', function() {
+            document.getElementById('date-fin').min = this.value;
+
+            // Si la date de fin est antérieure à la nouvelle date de début, la réinitialiser
+            if (document.getElementById('date-fin').value < this.value) {
+                document.getElementById('date-fin').value = this.value;
+            }
+        });
+    });
+</script>
 {% endblock %}

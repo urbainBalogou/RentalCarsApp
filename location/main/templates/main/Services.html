@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
+
 <title>Nos Services</title>
+
 {% block content %}
 
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Utiliser si vous déplacez le style dans un fichier CSS statique -->
+<!-- <link rel="stylesheet" href="{% static 'services/style.css' %}"/> -->
+
 <style>
-    /* Global Styles */
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        color: #333;
-        background-color: #f5f5f5; /* Couleur de fond légère */
-    }
 
     .services-container {
         max-width: 1200px;
@@ -19,7 +16,7 @@
         padding: 20px 40px;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        background-color: #fff; /* Couleur de fond du conteneur */
+        background-color: #fff;
     }
 
     h1 {
@@ -41,30 +38,10 @@
     h2 {
         color: #03a9f4;
         margin-bottom: 15px;
-        font-size: 1.8rem; /* Taille de police pour h2 */
+        font-size: 1.8rem;
     }
 
-    ul {
-        list-style: none;
-        padding-left: 0;
-    }
 
-    ul li {
-        margin: 10px 0;
-        font-size: 1.1rem;
-        position: relative;
-        padding-left: 25px;
-        color: #333;
-    }
-
-    ul li::before {
-        content: '✓';
-        color: #e91e63;
-        position: absolute;
-        left: 0;
-        top: 5px;
-        font-size: 1.2rem;
-    }
 
     .contact-button {
         display: block;

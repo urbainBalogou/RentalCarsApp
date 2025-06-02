@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background: #ff4584 linear-gradient(225deg, #e91e63, #03a9f4);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        color: white;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    h4 {
+        color: white;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    th {
+        background-color: rgba(0, 0, 0, 0.3);
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin: 20px auto;
+        max-width: 600px;
+        font-family: Arial, sans-serif;
+    }
+
+    .messages li {
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+    }
+
+    .messages .success {
+        background-color: #28a745; /* Vert pour le succès */
+        border-left: 5px solid #218838;
+    }
+
+    .messages .error {
+        background-color: #dc3545; /* Rouge pour les erreurs */
+        border-left: 5px solid #c82333;
+    }
+
+    .messages .info {
+        background-color: #17a2b8; /* Bleu pour les informations */
+        border-left: 5px solid #138496;
+    }
+
+    .messages .warning {
+        background-color: #ffc107; /* Jaune pour les avertissements */
+        border-left: 5px solid #e0a800;
+    }
+</style>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h1>Vos Réservations</h1>
+
+{% if user.is_authenticated %}
+    <h4>Liste de vos réservations :</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Voiture</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Région</th>
+                <th>Lieu de livraison</th>
+                <th>Chauffeur</th>
+                <th>Montant de la location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.voiture.model }}</td>
+                    <td>{{ reservation.deb_location }}</td>
+                    <td>{{ reservation.fin_location }}</td>
+                    <td>{{ reservation.region }}</td>
+                    <td>{{ reservation.lieu }}</td>
+                    {% if reservation.avec_chauffeur %}
+                    <td>Oui</td>
+                    {%else%}<td>Non</td>
+                    {%endif%}
+                    <td>{{reservation.montant_facture}}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">Vous n'avez aucune réservation pour le moment.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

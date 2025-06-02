@@ -11,6 +11,7 @@ from django.conf import settings
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.contrib.auth.hashers import make_password
+from django.contrib import messages
 
 User = get_user_model()
 
@@ -19,36 +20,60 @@ def signup(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         mail = request.POST.get("mail")
+        tel = request.POST.get("telephone")
         nom = request.POST.get("username")
         prenom = request.POST.get("username")
-        user = User.objects.create_user(username=username,
-                                        password=password,
-                                        email=mail)
+        if User.objects.filter(username=username).exists():
+            messages.error(request,"Un utilisateur existe déjà avec ce nom")
+            return render(request, 'accounts/signup.html')
+        if User.objects.filter(email=mail).exists():
+            messages.error(request,"Un utilisateur déjà enregistré avec cet email")
+            return render(request, 'accounts/signup.html')
 
+
+        user = User.objects.create_user(
+            email=mail,
+            username=username,
+            password=password,
+        )
         client = Client(nom=nom,
                         prenom=prenom,
+                        numero_tel=tel,
                         email=mail)
         client.save()
 
-        login(request, user)
+        login(request, user, backend='accounts.backend.EmailBackend')
         return redirect('index')
     return render(request, 'accounts/signup.html')
 
 
 def login_user(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('mail')
         password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
+        #print(f"email: {email}")
+        #print(f"password: {password}")
+        if not email or not password:
+            messages.error(request, "Veuillez remplir tous les champs.")
+            return render(request, 'accounts/login.html')
+
+        user = authenticate(request, email=email, password=password)
+
         if user:
             login(request, user)
+            messages.success(request, "Connexion réussie !")
             return redirect('index')
+        else:
+            messages.error(request, "Identifiants invalides.")
     return render(request, 'accounts/login.html')
 
 
 def logout_user(request):
     logout(request)
     return redirect('index')
+
+
+
 
 
 def reset_password(request):

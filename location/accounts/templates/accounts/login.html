@@ -1,44 +1,242 @@
-{%extends 'base.html' %}
-{%load static%}
-    <title>Connexion</title>
-{%block content%}
-    <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+{% extends 'base.html' %}
+{% load static %}
+<title>Connexion</title>
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    section {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+    }
+
+    section .imgBx {
+        position: relative;
+        width: 50%;
+        height: 100%;
+    }
+
+    section .imgBx:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(225deg, #e91e63, #03a9f4);
+        z-index: 1;
+        opacity: 0.4;
+    }
+
+    section .imgBx img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    section .contentBx {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+    }
+
+    section .contentBx .formBx {
+        width: 60%;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    section .contentBx .formBx h2 {
+        color: #607d8b;
+        font-weight: 600;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        border-bottom: 4px solid #ff4584;
+        display: inline-block;
+        letter-spacing: 1px;
+    }
+
+    section .contentBx .formBx .inputBx {
+        margin-bottom: 20px;
+    }
+
+    section .contentBx .formBx .inputBx span {
+        font-size: 16px;
+        display: inline-block;
+        color: #607d8b;
+        font-weight: 300;
+        letter-spacing: 1px;
+    }
+
+    section .contentBx .formBx .inputBx input {
+        width: 100%;
+        padding: 10px 20px;
+        outline: none;
+        border: 1px solid #607d8b;
+        font-size: 16px;
+        letter-spacing: 1px;
+        color: #607d8b;
+        background: transparent;
+        border-radius: 30px;
+    }
+
+    section .contentBx .formBx .inputBx input[type="submit"] {
+        background: #ff4584;
+        color: #fff;
+        outline: none;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    section .contentBx .formBx .inputBx input[type="submit"]:hover {
+        background: #f53677;
+    }
+
+    section .contentBx .formBx .inputBx p {
+        color: #607d8b;
+    }
+
+    section .contentBx .formBx .inputBx p a {
+        color: #ff4584;
+    }
+    .messages {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    position: relative;
+    width: 90%; /* Largeur ajustée */
+    max-width: 600px;
+    z-index: 9999;
+}
+
+.messages li {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    word-wrap: break-word; /* Évite les débordements de texte */
+}
+
+.messages .success {
+    background-color: #4CAF50; /* Vert */
+    border: 1px solid #388E3C;
+}
+
+.messages .error {
+    background-color: #f44336; /* Rouge */
+    border: 1px solid #d32f2f;
+}
+
+.messages .info {
+    background-color: #2196F3; /* Bleu */
+    border: 1px solid #1976D2;
+}
+
+.messages .warning {
+    background-color: #FF9800; /* Orange */
+    border: 1px solid #F57C00;
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    70% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.messages li {
+    animation: fadeInOut 5s ease-in-out forwards;
+}
 
 
-<form method="POST">
-    {% csrf_token %}
-       <section>
-        <div class="imgBx">
-            <img src="{% static 'menu/images/image_logo.jpg' %}">
 
+    @media (max-width: 768px) {
+        section {
+            flex-direction: column;
+        }
+
+        section .imgBx {
+            display: none;
+        }
+
+        section .contentBx {
+            width: 100%;
+        }
+
+        section .contentBx .formBx {
+            width: 90%;
+            margin: auto;
+        }
+    }
+</style>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<section>
+    <div class="imgBx">
+        <!--img src="{% static 'menu/images/image_logo.jpg' %}" alt="Background Image"-->
+    </div>
+    <div class="contentBx">
+        <div class="formBx">
+            <h2>Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="inputBx">
+                    <span>Email</span>
+                    <input type = "email" name="mail" required>
+                </div>
+                <div class="inputBx">
+                    <span>Mot de passe</span>
+                    <input type="password" name="password" required>
+                </div>
+                <div class="inputBx">
+                    <input type="submit" value="Connexion">
+                </div>
+                <div class="inputBx">
+                    <p>Mot de passe oublié? <a href="{% url 'reset_password' %}">Réinitialiser</a></p>
+                    <p>Pas encore inscrit? <a href="{% url 'signup' %}">S'inscrire</a></p>
+                </div>
+            </form>
         </div>
-        <div class="contentBx">
-            <div class="formBx">
-                <h2>Login</h2>
-                <form>
-                    <div class="inputBx">
-                        <span>Username</span>
-                        <input type="text" name="username" />
-                    </div>
-                    <div class="inputBx">
-                        <span>Password</span>
-                        <input type="password" name="password" />
-                    </div>
+    </div>
+</section>
 
-                    <div class="inputBx">
-                        <input type="submit" value="Sign In" name="" />
-                    </div>
-                    <div class="inputBx">
-                        <p>Mot de passe oublié? <a href="{% url 'reset_password' %}">Rénitialiser</a></p>
-                        <p>Don't have an account? <a href="{% url 'signup'%}">S'inscrire</a></p>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </div>
-    </section>
-
-</form>
 {% endblock %}

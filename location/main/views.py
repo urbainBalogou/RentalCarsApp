@@ -6,3 +6,6 @@ def index(request):
 
 def Services(request):
     return render(request, 'main/Services.html')
+
+def Contrat(request):
+    return render(request, 'main/Contrat.html')
