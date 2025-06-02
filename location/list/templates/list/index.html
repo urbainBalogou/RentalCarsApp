@@ -1,281 +1,284 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<title>Liste des voitures</title>
+{% block title %}Catalogue de Voitures - Location de Véhicules{% endblock %}
 
 {% block content %}
-<!-- link rel="stylesheet" href="{% static 'list/style.css' %}"-->
-
+<!-- Déplacer le CSS dans un fichier externe pour améliorer la performance -->
 <style>
   body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
-    background-attachment: fixed;
-    color: #f8f9fa;
-    min-height: 100vh;
-  }
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+  background-attachment: fixed;
+  color: #f8f9fa;
+  min-height: 100vh;
+}
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 
-  .page-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    font-weight: 700;
-  }
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+}
 
-  .search-bar {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+.search-bar {
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
+.search-bar input {
+  width: 90%;
+  max-width: 500px;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+#car-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-top: 2rem;
+}
+
+.car {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.car:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.car img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.5s ease;
+}
+
+.car:hover img {
+  transform: scale(1.05);
+}
+
+.nom {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0.7rem 0;
+  color: #fff;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+}
+
+.nom:after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: #ffd700;
+  bottom: -5px;
+  left: 25%;
+  border-radius: 2px;
+}
+
+.model {
+  font-size: 1.1rem;
+  text-transform: lowercase;
+  font-weight: 500;
+  margin: 0.7rem 0 1rem;
+  color: #e0e0e0;
+  font-style: italic;
+}
+
+.prix {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prix em {
+  font-weight: 600;
+  color: #ffd700;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+a.details-btn {
+  background-color: rgba(255, 215, 0, 0.2);
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  margin-top: 1rem;
+  font-weight: 600;
+  border: 2px solid #ffd700;
+}
+
+a.details-btn:hover {
+  background-color: #ffd700;
+  color: #333;
+  transform: scale(1.05);
+}
+
+.messages {
+  list-style: none;
+  padding: 0;
+  margin: 2rem auto;
+  max-width: 700px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.messages li {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+}
+
+.messages .success {
+  background-color: #28a745;
+  border-left: 5px solid #218838;
+}
+
+.messages .error {
+  background-color: #dc3545;
+  border-left: 5px solid #c82333;
+}
+
+.messages .info {
+  background-color: #17a2b8;
+  border-left: 5px solid #138496;
+}
+
+.messages .warning {
+  background-color: #ffc107;
+  border-left: 5px solid #e0a800;
+  color: #333;
+}
+
+.messages li {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  #car-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  #car-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .car {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #car-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
   .search-bar input {
     width: 90%;
-    max-width: 500px;
-    padding: 1rem 1.5rem;
-    border: none;
-    border-radius: 50px;
-    outline: none;
-    font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    padding: 0.8rem 1.2rem;
   }
+  .page-title {
+    font-size: 1.8rem;
+  }
+}
 
-  .search-bar input:focus {
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-  }
-
-  #car-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 voitures par ligne */
-    gap: 25px;
-    margin-top: 2rem;
-  }
-
-  .car {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .car:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-  }
-
-  .car img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.5s ease;
-  }
-
-  .car:hover img {
-    transform: scale(1.05);
-  }
-
-  .nom {
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0.7rem 0;
-    color: #fff;
-    letter-spacing: 1px;
-    position: relative;
-    display: inline-block;
-  }
-
-  .nom:after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 3px;
-    background: #ffd700;
-    bottom: -5px;
-    left: 25%;
-    border-radius: 2px;
-  }
-
-  .model {
-    font-size: 1.1rem;
-    text-transform: lowercase;
-    font-weight: 500;
-    margin: 0.7rem 0 1rem;
-    color: #e0e0e0;
-    font-style: italic;
-  }
-
-  .prix {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    color: #f0f0f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .prix em {
-    font-weight: 600;
-    color: #ffd700;
-  }
-
-  a {
-    text-decoration: none;
-    color: white;
-    transition: all 0.3s ease;
-    display: inline-block;
-  }
-
-  a.details-btn {
-    background-color: rgba(255, 215, 0, 0.2);
-    padding: 0.7rem 1.5rem;
-    border-radius: 50px;
-    margin-top: 1rem;
-    font-weight: 600;
-    border: 2px solid #ffd700;
-  }
-
-  a.details-btn:hover {
-    background-color: #ffd700;
-    color: #333;
-    transform: scale(1.05);
-  }
-
-  .messages {
-    list-style: none;
-    padding: 0;
-    margin: 2rem auto;
-    max-width: 700px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .messages li {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-    font-size: 1rem;
-    font-weight: 600;
-    color: white;
-    text-align: center;
-  }
-
-  /* Styles pour les différentes catégories de messages */
-  .messages .success {
-    background-color: #28a745; /* Vert pour le succès */
-    border-left: 5px solid #218838;
-  }
-
-  .messages .error {
-    background-color: #dc3545; /* Rouge pour les erreurs */
-    border-left: 5px solid #c82333;
-  }
-
-  .messages .info {
-    background-color: #17a2b8; /* Bleu pour les informations */
-    border-left: 5px solid #138496;
-  }
-
-  .messages .warning {
-    background-color: #ffc107; /* Jaune pour les avertissements */
-    border-left: 5px solid #e0a800;
-    color: #333;
-  }
-
-  /* Transition pour une animation douce */
-  .messages li {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Adaptabilité pour les écrans plus petits */
-  @media (max-width: 1200px) {
-    #car-list {
-      grid-template-columns: repeat(3, 1fr); /* 3 voitures par ligne */
-    }
-  }
-
-  @media (max-width: 900px) {
-    #car-list {
-      grid-template-columns: repeat(2, 1fr); /* 2 voitures par ligne */
-    }
-    .car {
-      padding: 1.2rem;
-    }
-  }
-
-  @media (max-width: 600px) {
-    #car-list {
-      grid-template-columns: repeat(1, 1fr); /* 1 voiture par ligne */
-    }
-    .search-bar input {
-      width: 90%;
-      padding: 0.8rem 1.2rem;
-    }
-    .page-title {
-      font-size: 1.8rem;
-    }
-  }
 </style>
 
-<div class="container">
+<!-- Section principale du catalogue -->
+<section class="container">
+  <!-- Titre de la page -->
   <h1 class="page-title">Catalogue de Voitures</h1>
 
   <!-- Barre de recherche -->
-  <div class="search-bar">
-    <input type="text" id="search-input" placeholder="Rechercher par model, marque, prix...">
+  <div class="search-bar" role="search">
+    <input type="text" id="search-input" placeholder="Rechercher par modèle, marque, prix..." aria-label="Rechercher des voitures">
   </div>
 
   <!-- Liste des voitures -->
   <div id="car-list">
     {% for car in cars %}
-    <div class="car">
-      <h2 class="nom">{{ car.marque }}</h2>
-      <h6 class="model">{{ car.model }}</h6>
-      <!--p class="prix"><em>course en ville : </em>{{ car.prix_location_ville_chauffeur }} F CFA</p>
-      <p class="prix"><em>course hors ville : </em>{{ car.prix_location_hors_ville_chauffeur }} F CFA</p-->
+    <article class="car" itemscope itemtype="http://schema.org/Car">
+      <!-- Marque de la voiture -->
+      <h2 class="nom" itemprop="brand">{{ car.marque }}</h2>
+      <!-- Modèle de la voiture -->
+      <h3 class="model" itemprop="model">{{ car.model }}</h3>
+
+      <!-- Image de la voiture -->
       {% if car.img_vehicule %}
         <a href="{{ car.get_absolute_url }}">
-          <img src="{{ car.img_vehicule.url }}" alt="{{ car.marque }}">
+          <img src="{{ car.img_vehicule.url }}" alt="Photo de la voiture {{ car.marque }} {{ car.model }}" itemprop="image" loading="lazy">
         </a>
-        <a href="{{ car.get_absolute_url }}" class="details-btn">Voir détails</a>
+        <!-- Bouton pour voir les détails -->
+        <a href="{{ car.get_absolute_url }}" class="details-btn" title="Voir les détails de la voiture {{ car.marque }} {{ car.model }}">Voir détails</a>
       {% else %}
-        <a href="{{ car.get_absolute_url }}" class="details-btn">Plus de détails</a>
+        <!-- Bouton pour plus de détails si l'image n'est pas disponible -->
+        <a href="{{ car.get_absolute_url }}" class="details-btn" title="Plus de détails sur la voiture {{ car.marque }} {{ car.model }}">Plus de détails</a>
       {% endif %}
-    </div>
+    </article>
     {% endfor %}
   </div>
-</div>
+</section>
 
+<!-- Script pour la fonctionnalité de recherche -->
 <script>
-  // Fonction pour filtrer les voitures
   document.getElementById('search-input').addEventListener('keyup', function () {
     let input = this.value.toLowerCase();
     let cars = document.querySelectorAll('.car');
@@ -284,14 +287,14 @@
       let carName = car.querySelector('.nom').innerText.toLowerCase();
       let carModel = car.querySelector('.model').innerText.toLowerCase();
 
-      // Pour gérer le cas où l'élément .prix peut ne pas être présent à cause des commentaires
+      // Gestion du prix (si présent)
       let carPrice = '';
       let priceElement = car.querySelector('.prix');
       if (priceElement) {
         carPrice = priceElement.innerText.toLowerCase();
       }
 
-      // Affiche ou masque les voitures en fonction de la recherche
+      // Filtrage des voitures
       if (carName.includes(input) || carPrice.includes(input) || carModel.includes(input)) {
         car.style.display = "";
       } else {

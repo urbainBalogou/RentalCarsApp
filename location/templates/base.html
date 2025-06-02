@@ -1,11 +1,45 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Agence de Location</title>
-    <!--link rel="stylesheet" href="{% static 'base.css' %}"-->
+
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}Accueil{% endblock %} - ELONOVACAR | Location de véhicules au Togo</title>
+    <meta name="description" content="{% block description %}ELONOVACAR - Votre partenaire de confiance pour la location de véhicules au Togo. Large choix de véhicules à des prix compétitifs.{% endblock %}">
+    <meta name="keywords" content="location voiture, location auto, Togo, Lomé, ELONOVACAR, véhicule, contrat location">
+    <meta name="author" content="ELONOVACAR">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'main/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'main/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'main/images/apple-touch-icon.png' %}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}ELONOVACAR{% endblock %} | Location de véhicules au Togo">
+    <meta property="og:description" content="{% block og_description %}ELONOVACAR - Votre partenaire de confiance pour la location de véhicules au Togo.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'main/images/img.png' %}{% endblock %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{% block twitter_title %}ELONOVACAR{% endblock %} | Location de véhicules au Togo">
+    <meta property="twitter:description" content="{% block twitter_description %}ELONOVACAR - Votre partenaire de confiance pour la location de véhicules au Togo.{% endblock %}">
+    <meta property="twitter:image" content="{% block twitter_image %}{% static 'main/images/img.png' %}{% endblock %}">
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
     <style>
         :root {
             --primary-color: #3a1c71;
@@ -336,20 +370,20 @@
     <header>
         <div class="header-content">
             <div class="logo-container">
-                <a href="{% url 'main' %}">
-                    <img src="{% static 'main/images/img.png' %}" alt="elonovacar">
+                <a href="{% url 'main' %}" title="Accueil ELONOVACAR">
+                    <img src="{% static 'main/images/img.png' %}" alt="Logo ELONOVACAR - Location de véhicules au Togo" width="180" height="auto">
                 </a>
             </div>
 
-            <button class="menu-toggle" id="menuToggle">☰</button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu de navigation">☰</button>
 
-            <nav>
+            <nav role="navigation" aria-label="Navigation principale">
                 <ul class="nav-main" id="mainNav">
-                    <li><a href="{% url 'nos_Services' %}">Nos Services</a></li>
-                    <li><a href="{% url 'index' %}">Nos Véhicules</a></li>
-                    <li><a href="{% url 'contrat' %}">Contrats</a></li>
-                   <li><a href="https://wa.me/+22890122357" target="_blank">WhatsApp</a></li>
-                    <li><a href="mailto:elonovacar@gmail.com">Email</a></li>
+                    <li><a href="{% url 'nos_Services' %}" title="Nos services de location">Nos Services</a></li>
+                    <li><a href="{% url 'index' %}" title="Notre flotte de véhicules">Nos Véhicules</a></li>
+                    <li><a href="{% url 'contrat' %}" title="Informations sur nos contrats">Contrats</a></li>
+                    <li><a href="https://wa.me/+22890122357" target="_blank" rel="noopener" title="Contactez-nous sur WhatsApp">WhatsApp</a></li>
+                    <li><a href="mailto:elonovacar@gmail.com" title="Envoyez-nous un email">Email</a></li>
                 </ul>
 
                 <ul class="nav-auth" id="authNav">
@@ -357,11 +391,11 @@
                         <div class="auth-links">
                             {% if user.is_authenticated %}
                                 <span>{{ user.username }}</span>
-                                <a href="{% url 'reservation' %}">Mes réservations</a>
-                                <a href="{% url 'logout' %}">Déconnexion</a>
+                                <a href="{% url 'reservation' %}" title="Voir mes réservations">Mes réservations</a>
+                                <a href="{% url 'logout' %}" title="Se déconnecter">Déconnexion</a>
                             {% else %}
-                                <a href="{% url 'login' %}">Connexion</a>
-                                <a href="{% url 'signup' %}">S'inscrire</a>
+                                <a href="{% url 'login' %}" title="Se connecter">Connexion</a>
+                                <a href="{% url 'signup' %}" title="Créer un compte">S'inscrire</a>
                             {% endif %}
                         </div>
                     </li>
@@ -383,23 +417,74 @@
             </div>
 
             <div class="footer-section">
+                <h3>Navigation</h3>
+                <p><a href="{% url 'main' %}" title="Page d'accueil">Accueil</a></p>
+                <p><a href="{% url 'nos_Services' %}" title="Nos services">Nos Services</a></p>
+                <p><a href="{% url 'index' %}" title="Notre flotte">Nos Véhicules</a></p>
+                <p><a href="{% url 'contrat' %}" title="Nos contrats">Contrats</a></p>
+            </div>
+
+            <div class="footer-section">
                 <h3>Contact</h3>
                 <p>Quartier Attiégou, non loin de l'EPP Attiégou</p>
-                <p>Tél : (+228) 99 83 45 48 / 90 12 23 57</p>
+                <p>Tél : <a href="tel:+22899834548">(+228) 99 83 45 48</a> / <a href="tel:+22890122357">90 12 23 57</a></p>
                 <p>NIF : 1001876719</p>
             </div>
 
             <div class="footer-section">
                 <h3>Développeur partenaire</h3>
-                <p>Contact : +22870436043</p>
-                <a href="https://urbainbalogou.github.io/mon-site-web-/index.html">Portfolio du Développeur</a>
+                <p>Contact : <a href="tel:+22870436043">+228 70 43 60 43</a></p>
+                <a href="https://urbainbalogou.github.io/mon-site-web-/index.html" target="_blank" rel="noopener" title="Portfolio du développeur">Portfolio du Développeur</a>
             </div>
         </div>
 
         <div class="copyright">
-            <p>&copy; 2024 ELONOVACAR - Tous droits réservés</p>
+            <p>© 2024 ELONOVACAR - Tous droits réservés</p>
         </div>
     </footer>
+
+    <!-- Schema.org markup for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "ELONOVACAR",
+      "image": "{% static 'main/images/img.png' %}",
+      "@id": "{{ request.build_absolute_uri }}",
+      "url": "{{ request.build_absolute_uri }}",
+      "telephone": "+22890122357",
+      "priceRange": "$$",
+      "description": "Location de véhicules au Togo. Large choix de voitures à des prix compétitifs.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Quartier Attiégou, non loin de l'EPP Attiégou",
+        "addressLocality": "Lomé",
+        "addressRegion": "",
+        "postalCode": "",
+        "addressCountry": "TG"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "",
+        "longitude": ""
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "08:00",
+          "closes": "18:00"
+        }
+      ]
+    }
+    </script>
 
     <script>
         // Toggle mobile menu
