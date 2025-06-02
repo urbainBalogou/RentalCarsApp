@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import login_user, logout_user
-
+from django.views.generic import TemplateView
 
 from .import settings
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('list_care/', include("list.urls")),
+    path('googleXXXXXXXXXXXX.html', TemplateView.as_view(template_name="google978439f45eca2181.html", content_type='text/html')),
     path('', include("main.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
