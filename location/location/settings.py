@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,14 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$b54%3+2-l3#t4c+f#ah8@wyheovr&g*=bf_ki#!g_y84xgrx6'
+env = environ.Env()
+environ.Env.read_env(env_file=str(BASE_DIR/".env"))
+SECRET_KEY = env("SECRET_KEY") #'django-insecure-v@&k&5ya)9s#0e50==#!ht5b5691iume7!7b_@vq)472&#or%x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG',True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -83,10 +83,20 @@ WSGI_APPLICATION = 'location.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djoker963djo$elonovacar',
+        'USER': 'djoker963djo',
+        'PASSWORD': 'bro3886@',
+        'HOST': 'djoker963djo.mysql.pythonanywhere-services.com',
+        'PORT': '',
     }
 }
 
