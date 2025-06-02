@@ -28,7 +28,7 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path('list_care/', include("list.urls")),
-    path('googleXXXXXXXXXXXX.html', TemplateView.as_view(template_name="google978439f45eca2181.html", content_type='text/html')),
+    path('google978439f45eca2181.html', TemplateView.as_view(template_name="google978439f45eca2181.html", content_type='text/html')),
     path('', include("main.urls")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
