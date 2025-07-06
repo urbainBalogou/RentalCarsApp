@@ -25,7 +25,7 @@ environ.Env.read_env(env_file=str(BASE_DIR/".env"))
 SECRET_KEY = env("SECRET_KEY") #'django-insecure-v@&k&5ya)9s#0e50==#!ht5b5691iume7!7b_@vq)472&#or%x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG',True)
+DEBUG = env.bool('DEBUG', True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
@@ -83,13 +83,13 @@ WSGI_APPLICATION = 'location.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}"""
-DATABASES = {
+}
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'djoker963djo$elonovacar',
@@ -98,7 +98,7 @@ DATABASES = {
         'HOST': 'djoker963djo.mysql.pythonanywhere-services.com',
         'PORT': '',
     }
-}
+}"""
 
 
 # Password validation
