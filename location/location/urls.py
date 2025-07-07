@@ -30,5 +30,6 @@ urlpatterns = [
     path('list_care/', include("list.urls")),
     path('google978439f45eca2181.html', TemplateView.as_view(template_name="google978439f45eca2181.html", content_type='text/html')),
     path('', include("main.urls")),
-
+     path('api/', include('list.api_urls')),
+# Remplacez 'votre_app' par le nom de votre app
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

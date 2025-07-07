@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'list',
     'accounts',
     'main',
+   'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'elonovacar@gmail.com'
 EMAIL_HOST_PASSWORD = 'cwps sknu xoaj ulun'
 DEFAULT_FROM_EMAIL = 'elonovacar@site.com'
+# Configuration Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+}
